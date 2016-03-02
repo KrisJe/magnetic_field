@@ -28,7 +28,7 @@ in_ev=0
 
 
 for line in input_file:
-    in_ev++
+    in_ev = in_ev + 1
     if ( in_ev > 3 and float(line.split()[0]).is_integer() and float(line.split()[1]).is_integer() and float(line.split()[2]).is_integer() ) :
         X_v.push_back( float(line.split()[0]) )
         Y_v.push_back( float(line.split()[1]) )
