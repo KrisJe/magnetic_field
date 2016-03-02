@@ -29,12 +29,16 @@ in_ev=0
 
 for line in input_file:
     in_ev++
-    if in_ev > 3:
+    if ( in_ev > 3 and float(line.split()[0]).is_integer() and float(line.split()[1]).is_integer() and float(line.split()[2]).is_integer() ) :
         X_v.push_back( float(line.split()[0]) )
         Y_v.push_back( float(line.split()[1]) )
         Z_v.push_back( float(line.split()[2]) )
-                       
-                       
+        Bx_v.push_back( float(line.split()[3]) )
+        By_v.push_back( float(line.split()[4]) )               
+        Bz_v.push_back( float(line.split()[5]) )
+        continue
+    
+
 #  Area of integration
 L = 1.0
 W = 1.0
