@@ -5,6 +5,7 @@ import os, sys, math
 import numpy as np
 import matplotlib.pyplot as plt
 import ROOT as r
+#import rootpy.plotting.root2matplotlib as r2m
 
 
 # Get the input lhe file
@@ -24,9 +25,24 @@ Z_v =r.vector('Float_t')()
 Bx_v =r.vector('Float_t')()
 By_v =r.vector('Float_t')()
 Bz_v = r.vector('Float_t')()
+Y1_v =r.vector('Float_t')()
+Z1_v =r.vector('Float_t')()
+By1_v =r.vector('Float_t')()
+Bz1_v = r.vector('Float_t')()
+Y2_v =r.vector('Float_t')()
+X2_v =r.vector('Float_t')()
+By2_v =r.vector('Float_t')()
+Bx2_v = r.vector('Float_t')()
 in_ev=0
+rec_ev=0
+rec_yz=0
+rec_xy=0
 
+XY_h2f = r.TH2F("dataXY", "XY;X;Y", 101, -5.05, 5.05, 101, -5.05, 5.05)
+ZY_h2f = r.TH2F("dataZY", "ZY;Z;Y", 241, -12.05, 12.05, 101, -5.05, 5.05)
 
+c1 = r.TCanvas( 'c1', 'Dynamic Filling Example', 200, 10, 1000, 700 )
+c1.Divide(1,2)
 for line in input_file:
     in_ev = in_ev + 1
     if ( in_ev > 3 and float(line.split()[0]).is_integer() and float(line.split()[1]).is_integer() and float(line.split()[2]).is_integer() ) :
@@ -36,9 +52,40 @@ for line in input_file:
         Bx_v.push_back( float(line.split()[3]) )
         By_v.push_back( float(line.split()[4]) )               
         Bz_v.push_back( float(line.split()[5]) )
-        continue
-    
+        rec_ev = rec_ev + 1
+    if ( in_ev > 3 and float(line.split()[0]) == 0.0 ) :
+        Y1_v.push_back( float(line.split()[1]) )
+        Z1_v.push_back( float(line.split()[2]) )
+        By1_v.push_back( float(line.split()[4]) )               
+        Bz1_v.push_back( float(line.split()[5]) )
+        rec_yz = rec_yz +1
+        ZY_h2f.Fill( float(line.split()[2]) , float(line.split()[1]) , math.sqrt(float(line.split()[4])*float(line.split()[4]) + float(line.split()[5])*float(line.split()[5])) )
+    if ( in_ev > 3 and float(line.split()[2]) == 0.0 ) :
+        Y2_v.push_back( float(line.split()[1]) )
+        X2_v.push_back( float(line.split()[0]) )
+        By2_v.push_back( float(line.split()[4]) )               
+        Bx2_v.push_back( float(line.split()[3]) )
+        rec_xy = rec_xy +1
+        XY_h2f.Fill( float(line.split()[0]) , float(line.split()[1]) , math.sqrt(float(line.split()[4])*float(line.split()[4]) + float(line.split()[3])*float(line.split()[3])) )
 
+
+print "Integer ev=%d  ; X=0 ev=%d  ; Z=0 ev=%d" % (rec_ev,rec_yz,rec_xy)
+#hist_xy = r2m.Hist2D(XY_h2f)
+#hist_zy = r2m.Hist2D(ZY_h2f)
+
+#fig = plt.figure(figsize=[6,3])
+#ax1 = plt.subplot(121)
+#hist_xy.colz()
+#ax2 = plt.subplot(122)
+#hist_zy.colz()
+
+#plt.show()
+
+c1.cd(1)
+XY_h2f.Draw("COLZ")
+c1.cd(2)
+ZY_h2f.Draw("COLZ")
+c1.Update()
 #  Area of integration
 L = 1.0
 W = 1.0
