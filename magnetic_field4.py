@@ -59,14 +59,14 @@ for line in input_file:
         By1_v.push_back( float(line.split()[4]) )               
         Bz1_v.push_back( float(line.split()[5]) )
         rec_yz = rec_yz +1
-        ZY_h2f.Fill( float(line.split()[2]) , float(line.split()[1]) , math.sqrt(float(line.split()[4])*float(line.split()[4]) + float(line.split()[5])*float(line.split()[5])) )
+        ZY_h2f.Fill( float(line.split()[2]) , float(line.split()[1]) , math.sqrt(float(line.split()[3])*float(line.split()[3]) + float(line.split()[4])*float(line.split()[4]) + float(line.split()[5])*float(line.split()[5])) )
     if ( in_ev > 3 and float(line.split()[2]) == 0.0 ) :
         Y2_v.push_back( float(line.split()[1]) )
         X2_v.push_back( float(line.split()[0]) )
         By2_v.push_back( float(line.split()[4]) )               
         Bx2_v.push_back( float(line.split()[3]) )
         rec_xy = rec_xy +1
-        XY_h2f.Fill( float(line.split()[0]) , float(line.split()[1]) , math.sqrt(float(line.split()[4])*float(line.split()[4]) + float(line.split()[3])*float(line.split()[3])) )
+        XY_h2f.Fill( float(line.split()[0]) , float(line.split()[1]) , math.sqrt(float(line.split()[5])*float(line.split()[5]) + float(line.split()[4])*float(line.split()[4]) + float(line.split()[3])*float(line.split()[3])) )
 
 
 print "Integer ev=%d  ; X=0 ev=%d  ; Z=0 ev=%d" % (rec_ev,rec_yz,rec_xy)
