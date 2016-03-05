@@ -1,6 +1,3 @@
-# Author: Gael Varoquaux <gael.varoquaux@normalesup.org>
-# Copyright (c) 2009, Enthought, Inc.
-# License: BSD Style.
 
 
 import numpy as np
@@ -190,7 +187,23 @@ Bnorm = np.sqrt(Bx**2 + By**2 + Bz**2)
 c2 = Canvas()
 c2.SetRightMargin(0.1)
 h2_B_XY = Hist2D(101, -5, 5, 101, -5, 5)
-h2_B_XY.Fill(X,Y,Bnorm)
+print "lenght X=%d , Y=%d, Z=%d, B=%d " % (len(X),len(Y),len(Z),len(Bnorm)) 
+
+for i in range (0,len(X)):
+    for j in range (0,len(Y)):
+        h2_B_XY.Fill(X[i][j][121],Y[i][j][121],Bnorm[i][j][121])
+h2_B_XY.Draw('COLZ')
+#c2.Print("Helmoltz_XY.jpg")
+c3 = Canvas()
+c3.SetRightMargin(0.1)
+
+h2_B_ZY = Hist2D(241, -12, 12, 101, -5, 5)
+for i in range (0,241):
+    for j in range (0,len(Y)):
+        h2_B_ZY.Fill(Z[51][j][i],Y[51][j][i],Bnorm[51][j][i])
+h2_B_ZY.Draw('COLZ')
+#c2.Print("Helmoltz_ZY.jpg")
+
 ##############################################################################
 # Visualization
 
